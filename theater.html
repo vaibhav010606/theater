@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Cinema Seat Picker — India</title>
+    <title>Cinema Seat Picker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap"
         rel="stylesheet" />
     <style>
@@ -18,9 +19,10 @@
         body {
             width: 100%;
             height: 100%;
-            background: #0a0a0f;
+            background: #050508;
             font-family: 'DM Sans', sans-serif;
-            overflow: hidden
+            overflow: hidden;
+            touch-action: none;
         }
 
         #wrap {
@@ -46,367 +48,62 @@
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none
-        }
-
-        /* ── TOPBAR ── */
-        #topbar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 14px 22px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, .75), transparent);
             pointer-events: none;
-            flex-wrap: wrap;
-        }
-
-        #title {
-            color: #fff;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 22px;
-            letter-spacing: 3px;
-            opacity: .95;
-            flex-shrink: 0;
-        }
-
-        #formatBar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            pointer-events: all;
-        }
-
-        #formatSelect {
-            background: rgba(20, 20, 32, .9);
-            border: 1px solid rgba(255, 255, 255, .18);
-            color: #fff;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 12px;
-            padding: 7px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            outline: none;
-            letter-spacing: .5px;
-            transition: border-color .2s;
-        }
-
-        #formatSelect:hover {
-            border-color: rgba(232, 56, 10, .6)
-        }
-
-        #modeLabel {
-            background: rgba(255, 255, 255, .1);
-            border: 1px solid rgba(255, 255, 255, .15);
-            color: rgba(255, 255, 255, .75);
-            font-size: 11px;
-            padding: 5px 14px;
-            border-radius: 20px;
-            letter-spacing: 1.5px;
-            flex-shrink: 0;
-        }
-
-        /* ── FORMAT BADGE ── */
-        #fmtBadge {
-            position: absolute;
-            top: 60px;
-            left: 22px;
-            background: rgba(232, 56, 10, .15);
-            border: 1px solid rgba(232, 56, 10, .35);
-            color: #e8560a;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 6px 16px;
-            border-radius: 20px;
-            letter-spacing: 1px;
-            pointer-events: none;
-            transition: all .3s;
-        }
-
-        #fmtInfo {
-            position: absolute;
-            top: 60px;
-            left: 22px;
-            margin-top: 34px;
-            color: rgba(255, 255, 255, .45);
-            font-size: 11px;
-            pointer-events: none;
-            letter-spacing: .3px;
-            line-height: 1.7;
-        }
-
-        /* ── LEGEND ── */
-        #legend {
-            position: absolute;
-            top: 62px;
-            right: 22px;
             display: flex;
             flex-direction: column;
-            gap: 7px;
-            pointer-events: none;
-        }
-
-        .leg {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: rgba(255, 255, 255, .65);
-            font-size: 11px
-        }
-
-        .leg-dot {
-            width: 11px;
-            height: 11px;
-            border-radius: 2px;
-            flex-shrink: 0
-        }
-
-        /* ── HINT ── */
-        #hint {
-            position: absolute;
-            bottom: 118px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, .5);
-            color: rgba(255, 255, 255, .6);
-            font-size: 11px;
-            padding: 7px 20px;
-            border-radius: 20px;
-            letter-spacing: .4px;
-            transition: opacity .8s;
-            white-space: nowrap;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, .07);
-        }
-
-        /* ── SEL PANEL ── */
-        #selpanel {
-            position: absolute;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(8, 8, 18, .95);
-            border: 1px solid rgba(255, 255, 255, .12);
-            color: #fff;
-            padding: 18px 28px 20px;
-            border-radius: 16px;
-            display: none;
-            text-align: center;
-            pointer-events: all;
-            backdrop-filter: blur(20px);
-            min-width: 280px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, .65);
-        }
-
-        #selrow {
-            font-size: 9px;
-            color: rgba(255, 255, 255, .35);
-            letter-spacing: 2.5px;
-            margin-bottom: 4px;
-            text-transform: uppercase
-        }
-
-        #seltext {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 22px;
-            margin-bottom: 10px;
-            color: #fff;
-            letter-spacing: 1px
-        }
-
-        #selinforow {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 14px;
-        }
-
-        .sinfo {
-            background: rgba(255, 255, 255, .05);
-            border-radius: 8px;
-            padding: 7px 6px;
-            font-size: 10px;
-            color: rgba(255, 255, 255, .5);
-        }
-
-        .sinfo strong {
-            display: block;
-            font-size: 13px;
-            color: #fff;
-            font-weight: 600;
-            margin-bottom: 1px
-        }
-
-        #selrating {
-            background: rgba(255, 255, 255, .05);
-            border-radius: 8px;
-            padding: 7px 10px;
-            margin-bottom: 14px;
-            font-size: 11px;
-            display: flex;
-            align-items: center;
             justify-content: space-between;
         }
 
-        #ratingBar {
-            height: 4px;
-            border-radius: 2px;
-            flex: 1;
-            margin: 0 10px;
-            background: rgba(255, 255, 255, .1);
-            overflow: hidden;
+        .glass-panel {
+            background: rgba(12, 12, 18, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        #ratingFill {
-            height: 100%;
-            border-radius: 2px;
-            transition: width .4s, background .4s
+        .pointer-auto {
+            pointer-events: auto;
         }
 
-        #btnview {
-            background: linear-gradient(135deg, #e8380a, #c02a06);
-            color: #fff;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 9px;
-            font-size: 13px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            letter-spacing: .3px;
-            transition: all .2s;
-            font-family: 'DM Sans', sans-serif;
-            box-shadow: 0 4px 20px rgba(232, 56, 10, .35);
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
-        #btnview:hover {
-            background: linear-gradient(135deg, #ff4a18, #d63808);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 24px rgba(232, 56, 10, .5)
+        /* Custom Select Dropdown */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%22//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right .7rem top 50%;
+            background-size: .65rem auto;
         }
 
-        /* ── BACK BTN ── */
-        #backbtn {
-            position: absolute;
-            top: 14px;
-            left: 22px;
-            background: rgba(255, 255, 255, .1);
-            border: 1px solid rgba(255, 255, 255, .18);
-            color: #fff;
-            font-size: 12px;
-            padding: 8px 18px;
-            border-radius: 9px;
-            cursor: pointer;
-            display: none;
-            pointer-events: all;
-            backdrop-filter: blur(10px);
-            transition: all .2s;
-            font-weight: 500;
-            font-family: 'DM Sans', sans-serif;
-            letter-spacing: .3px;
-        }
-
-        #backbtn:hover {
-            background: rgba(255, 255, 255, .2)
-        }
-
-        /* ── FORMAT TOOLTIP ── */
-        #fmtTooltip {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(8, 8, 18, .97);
-            border: 1px solid rgba(232, 56, 10, .3);
-            color: #fff;
-            padding: 28px 36px;
-            border-radius: 18px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity .4s;
-            text-align: center;
-            min-width: 320px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, .7);
-            z-index: 10;
-        }
-
-        #fmtTooltip h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            letter-spacing: 2px;
-            color: #e8560a;
-            margin-bottom: 4px
-        }
-
-        #fmtTooltip p {
-            font-size: 12px;
-            color: rgba(255, 255, 255, .5);
-            letter-spacing: .3px
-        }
-
-        /* ── PLAY OVERLAY ── */
+        /* Play Overlay */
         #playoverlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, .75);
-            display: none;
+            background: rgba(0, 0, 0, .85);
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 20;
+            z-index: 50;
             cursor: pointer;
-            gap: 14px;
+            gap: 16px;
+            backdrop-filter: blur(5px);
+            transition: opacity 0.4s;
         }
 
-        #playoverlay .play-icon {
-            width: 72px;
-            height: 72px;
-            background: rgba(232, 56, 10, .9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 50px rgba(232, 56, 10, .4);
+        .play-btn {
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        #playoverlay p {
-            color: rgba(255, 255, 255, .7);
-            font-size: 13px;
-            letter-spacing: .5px
-        }
-
-        @media (max-width: 600px) {
-            #topbar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            #formatBar {
-                width: 100%;
-            }
-
-            #fmtBadge,
-            #fmtInfo {
-                top: 110px;
-            }
-
-            #legend {
-                top: 110px;
-            }
-
-            #selpanel {
-                width: 90%;
-                min-width: auto;
-            }
+        #playoverlay:hover .play-btn {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
         }
     </style>
 </head>
@@ -414,924 +111,592 @@
 <body>
     <div id="wrap">
         <canvas id="c"></canvas>
+
         <div id="playoverlay">
-            <div class="play-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+            <div
+                class="play-btn w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,0.5)]">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
                     <polygon points="6,3 20,12 6,21" />
-                </svg></div>
-            <p>Click to play movie on screen</p>
+                </svg>
+            </div>
+            <p class="text-white/70 text-sm tracking-wider uppercase font-medium">Click to Start Cinema Experience</p>
         </div>
-        <div id="ui">
-            <div id="topbar">
-                <div id="title">🎬 CINEMA SEAT PICKER</div>
-                <div id="formatBar">
-                    <select id="formatSelect">
+
+        <div id="ui" class="p-4 sm:p-6">
+            <!-- Top Bar -->
+            <div
+                class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pointer-events-none">
+                <div class="flex items-center gap-4">
+                    <h1
+                        class="text-white font-['Bebas_Neue'] text-3xl sm:text-4xl tracking-widest text-glow drop-shadow-lg">
+                        CINEPICKER</h1>
+                    <div id="modeLabel"
+                        class="glass-panel text-white/80 text-xs px-3 py-1 rounded-full uppercase tracking-widest font-semibold border border-white/20 transition-all">
+                        OVERVIEW
+                    </div>
+                </div>
+
+                <div class="pointer-auto flex gap-3 w-full sm:w-auto">
+                    <select id="formatSelect"
+                        class="glass-panel text-white text-sm px-4 py-2.5 pr-10 rounded-xl cursor-pointer hover:bg-white/10 transition-colors w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="standard">Standard 2D/3D</option>
                         <option value="imax">IMAX Digital/Laser</option>
                         <option value="luxury">Luxury (Insignia/Luxe)</option>
-                        <option value="fdx">4DX</option>
-                        <option value="screenx">ScreenX</option>
+                        <option value="fdx">4DX Motion</option>
+                        <option value="screenx">ScreenX (270°)</option>
                     </select>
-                </div>
-                <div id="modeLabel">OVERVIEW</div>
-            </div>
-
-            <div id="fmtBadge">STANDARD 2D/3D</div>
-            <div id="fmtInfo"></div>
-
-            <div id="legend">
-                <div class="leg">
-                    <div class="leg-dot" style="background:#3a7bd5"></div>Available
-                </div>
-                <div class="leg">
-                    <div class="leg-dot" style="background:#22cc66"></div>Selected
-                </div>
-                <div class="leg">
-                    <div class="leg-dot" style="background:#e8a30a"></div>Restricted
-                </div>
-                <div class="leg">
-                    <div class="leg-dot" style="background:#2a8a4a;border:1px solid #22cc66"></div>Entry/Exit
+                    <button id="backbtn"
+                        class="glass-panel text-white text-sm px-5 py-2.5 rounded-xl cursor-pointer hover:bg-white/10 transition-colors hidden font-medium">
+                        ← Back to Theater
+                    </button>
                 </div>
             </div>
 
-            <div id="hint">Drag to rotate &nbsp;·&nbsp; Scroll to zoom &nbsp;·&nbsp; Click a seat</div>
-
-            <div id="selpanel">
-                <div id="selrow">SELECTED SEAT</div>
-                <div id="seltext">Row A, Seat 1</div>
-                <div id="selinforow">
-                    <div class="sinfo"><strong id="si-dist">—</strong>from screen</div>
-                    <div class="sinfo"><strong id="si-angle">—</strong>horiz. angle</div>
-                    <div class="sinfo"><strong id="si-tier">—</strong>tier</div>
-                </div>
-                <div id="selrating">
-                    <span id="ratingEmoji">🟢</span>
-                    <div id="ratingBar">
-                        <div id="ratingFill"></div>
+            <!-- Format Info -->
+            <div class="flex-1 relative pointer-events-none">
+                <div class="absolute top-4 left-0">
+                    <div id="fmtBadge"
+                        class="inline-block bg-blue-600/20 border border-blue-500/40 text-blue-400 text-xs font-bold px-4 py-1.5 rounded-full tracking-widest mb-2 transition-colors">
+                        STANDARD
                     </div>
-                    <span id="ratingLabel" style="font-size:11px;color:rgba(255,255,255,.6)">Best</span>
+                    <div id="fmtInfo"
+                        class="text-white/50 text-xs tracking-wide leading-relaxed max-w-xs transition-opacity">
+                        Loading format data...
+                    </div>
                 </div>
-                <button id="btnview">View From This Seat</button>
+
+                <div id="hint"
+                    class="absolute bottom-6 left-1/2 -translate-x-1/2 glass-panel text-white/70 text-xs px-6 py-2.5 rounded-full tracking-wider whitespace-nowrap transition-opacity duration-700">
+                    Drag to rotate · Scroll to zoom · Click a seat
+                </div>
             </div>
 
-            <div id="fmtTooltip">
-                <h2 id="ftt-name"></h2>
-                <p id="ftt-desc"></p>
+            <!-- Selection Panel -->
+            <div id="selpanel"
+                class="absolute bottom-6 left-1/2 -translate-x-1/2 glass-panel p-5 rounded-2xl hidden pointer-auto w-80 shadow-2xl transform transition-transform border border-white/20 bg-[#0a0a0f]/95">
+                <div class="text-white/40 text-[10px] tracking-[0.2em] font-semibold mb-1">SELECTED SEAT</div>
+                <div id="seltext" class="font-['Bebas_Neue'] text-3xl text-white tracking-wide mb-4 text-glow">ROW A,
+                    SEAT 1</div>
+
+                <div class="grid grid-cols-3 gap-2 mb-4">
+                    <div class="bg-white/5 rounded-lg p-2 text-center">
+                        <strong id="si-dist" class="block text-white text-sm font-semibold mb-0.5">—</strong>
+                        <span class="text-white/40 text-[9px] uppercase tracking-wider">Distance</span>
+                    </div>
+                    <div class="bg-white/5 rounded-lg p-2 text-center">
+                        <strong id="si-angle" class="block text-white text-sm font-semibold mb-0.5">—</strong>
+                        <span class="text-white/40 text-[9px] uppercase tracking-wider">Angle</span>
+                    </div>
+                    <div class="bg-white/5 rounded-lg p-2 text-center">
+                        <strong id="si-tier" class="block text-white text-sm font-semibold mb-0.5">—</strong>
+                        <span class="text-white/40 text-[9px] uppercase tracking-wider">Tier</span>
+                    </div>
+                </div>
+
+                <button id="btnview"
+                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)]">
+                    Enter Seat View
+                </button>
             </div>
-            <button id="backbtn" onclick="exitSeatView()">← Back to Theater</button>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // ═══════════════════════════════════════════════
-        //  FORMAT CONFIG — Accurate Indian Theater Data
-        // ═══════════════════════════════════════════════
         const FORMATS = {
             standard: {
-                name: 'Standard 2D/3D', shortName: 'STANDARD 2D/3D',
-                rows: 12, cols: 20, screenFt: 45,
-                aisleAfterRow: -1,
-                entry: 'rear', rowDepthFt: 3, anglePerSeat: 2,
-                blockSize: 0, seatScale: 1,
-                screenxWall: false, isImax: false,
-                desc: '150–300 seats · 45 ft screen · Classic Dark Blue Theme',
-                takenPct: .22,
-                theme: {
-                    wallHex: 0x0a0f1d,
-                    panelHex: 0x182234,
-                    floorHex: 0x0b0d14,
-                    ambHex: 0xd0e0ff,
-                    ambInt: 1.0,
-                    sconceHex: 0x4488ff,
-                    sconceInt: 1.1,
-                    seatCushion: 0x1d3a5f,
-                    seatBack: 0x122438,
-                    curtainHex: 0x0b1329
-                }
+                id: 'standard', name: 'Standard 2D/3D',
+                rows: 12, cols: 22,
+                screenW: 24, screenH: 10,
+                isImax: false, isScreenX: false, isLuxury: false, is4DX: false,
+                colorTheme: { seat: 0x1e3a8a, ambient: 0xffffff, lightInt: 0.8 }, // Blue seats
+                desc: '264 Seats · 45 ft Flat Screen · Standard stadium raking.',
+                badgeClass: 'bg-blue-600/20 border-blue-500/40 text-blue-400'
             },
             imax: {
-                name: 'IMAX Digital/Laser', shortName: 'IMAX',
-                rows: 13, cols: 30, screenFt: 72,
-                aisleAfterRow: 6,
-                entry: 'middle', rowDepthFt: 4, anglePerSeat: 1.5,
-                blockSize: 0, seatScale: 1,
-                screenxWall: false, isImax: true,
-                desc: '390 seats · 72 ft screen · Deep Cinematic Dark Theme & Immersive Blue Accent Strips',
-                takenPct: .28,
-                theme: {
-                    wallHex: 0x05060a,
-                    panelHex: 0x0a0e18,
-                    floorHex: 0x050508,
-                    ambHex: 0xaaccff,
-                    ambInt: 1.2,
-                    sconceHex: 0x0055ff,
-                    sconceInt: 1.5,
-                    seatCushion: 0x16181f,
-                    seatBack: 0x0d0e12,
-                    curtainHex: 0x030407
-                }
+                id: 'imax', name: 'IMAX Digital/Laser',
+                rows: 14, cols: 32,
+                screenW: 36, screenH: 19, // Massive curved 1.90:1
+                isImax: true, isScreenX: false, isLuxury: false, is4DX: false,
+                colorTheme: { seat: 0x111111, ambient: 0xe0f2fe, lightInt: 1.0 }, // Black leather
+                desc: '448 Seats · 72 ft Curved Screen · Steep pitch · Ceiling removed.',
+                badgeClass: 'bg-cyan-600/20 border-cyan-500/40 text-cyan-400'
             },
             luxury: {
-                name: 'Luxury (Insignia/Luxe)', shortName: 'LUXURY',
-                rows: 4, cols: 12, screenFt: 35,
-                aisleAfterRow: -1,
-                entry: 'rear', rowDepthFt: 3, anglePerSeat: 2,
-                blockSize: 0, seatScale: 1.45,
-                screenxWall: false, isImax: false,
-                desc: '48 seats · 35 ft screen · Premium Recliners with Warm Amber Lighting & Side Tables',
-                takenPct: .15,
-                theme: {
-                    wallHex: 0x1a120c,
-                    panelHex: 0x362316,
-                    floorHex: 0x120d09,
-                    ambHex: 0xffe5b4,
-                    ambInt: 1.3,
-                    sconceHex: 0xff9933,
-                    sconceInt: 1.6,
-                    seatCushion: 0x6e3c1e,
-                    seatBack: 0x452410,
-                    curtainHex: 0x2b1005
-                }
+                id: 'luxury', name: 'Luxury (Insignia/Luxe)',
+                rows: 5, cols: 12,
+                screenW: 16, screenH: 7, // Smaller intimate screen
+                isImax: false, isScreenX: false, isLuxury: true, is4DX: false,
+                colorTheme: { seat: 0x452b17, ambient: 0xf59e0b, lightInt: 0.5 }, // Brown leather, amber lights
+                desc: '60 Seats · 30 ft Screen · Recliners & Tray Tables · Massive legroom.',
+                badgeClass: 'bg-amber-600/20 border-amber-500/40 text-amber-400'
             },
             fdx: {
-                name: '4DX', shortName: '4DX',
-                rows: 7, cols: 16, screenFt: 45,
-                aisleAfterRow: -1,
-                entry: 'rear', rowDepthFt: 3, anglePerSeat: 2,
-                blockSize: 4, seatScale: 1,
-                screenxWall: false, isImax: false,
-                desc: '112 seats · 45 ft screen · Motion Base Blocks with Golden/Blue Acoustic Walls',
-                takenPct: .2,
-                theme: {
-                    wallHex: 0x081121,
-                    panelHex: 0xd4a017, // Golden accent panels matching image 4
-                    floorHex: 0x0a0e17,
-                    ambHex: 0xe0f0ff,
-                    ambInt: 1.1,
-                    sconceHex: 0x00aaff,
-                    sconceInt: 1.4,
-                    seatCushion: 0x1c5a85,
-                    seatBack: 0x102a3d,
-                    curtainHex: 0x0a1424
-                }
+                id: 'fdx', name: '4DX Motion',
+                rows: 8, cols: 16,
+                screenW: 20, screenH: 8.5,
+                isImax: false, isScreenX: false, isLuxury: false, is4DX: true,
+                colorTheme: { seat: 0x991b1b, ambient: 0xff0000, lightInt: 0.4 }, // Red seats, red ambient
+                desc: '128 Seats · 40 ft Screen · Grouped in mechanical motion blocks of 4.',
+                badgeClass: 'bg-red-600/20 border-red-500/40 text-red-400'
             },
             screenx: {
-                name: 'ScreenX (270°)', shortName: 'SCREENX',
-                rows: 12, cols: 18, screenFt: 45,
-                aisleAfterRow: -1,
-                entry: 'rear', rowDepthFt: 3, anglePerSeat: 2,
-                blockSize: 0, seatScale: 1,
-                screenxWall: true, isImax: false,
-                desc: '216 seats · 270° Side Projections · Immersive Dark Panoramic Environment',
-                takenPct: .22,
-                theme: {
-                    wallHex: 0x0d0d11,
-                    panelHex: 0x1d1d24,
-                    floorHex: 0x09090d,
-                    ambHex: 0xd0d0e0,
-                    ambInt: 1.1,
-                    sconceHex: 0x666688,
-                    sconceInt: 0.5, // Dimmed to let side walls pop
-                    seatCushion: 0x24242e,
-                    seatBack: 0x17171d,
-                    curtainHex: 0x0a0a0e
-                }
+                id: 'screenx', name: 'ScreenX (270°)',
+                rows: 10, cols: 20,
+                screenW: 20, screenH: 8.5,
+                isImax: false, isScreenX: true, isLuxury: false, is4DX: false,
+                colorTheme: { seat: 0x1e293b, ambient: 0xffffff, lightInt: 0.6 }, // Slate seats
+                desc: '200 Seats · 270° U-shaped panoramic projection across side walls.',
+                badgeClass: 'bg-purple-600/20 border-purple-500/40 text-purple-400'
             }
         };
 
-        // ═══════════════════════════════════════════════
-        //  THREE.JS SETUP
-        // ═══════════════════════════════════════════════
         const canvas = document.getElementById('c');
         let W = window.innerWidth, H = window.innerHeight;
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
         renderer.setSize(W, H);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.3;
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050508);
+        scene.fog = new THREE.Fog(0x050508, 10, 60);
+
+        const camera = new THREE.PerspectiveCamera(50, W / H, 0.1, 150);
+        // Camera physics variables (crucial for smooth gliding)
+        let targetCamPos = new THREE.Vector3(0, 15, 25);
+        let targetCamLook = new THREE.Vector3(0, 5, -10);
 
         window.addEventListener('resize', () => {
             W = window.innerWidth; H = window.innerHeight;
             renderer.setSize(W, H);
-            camera.aspect = W / H; camera.updateProjectionMatrix();
+            camera.aspect = W / H;
+            camera.updateProjectionMatrix();
         });
 
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x08080c);
-        scene.fog = new THREE.Fog(0x08080c, 30, 80); // Adjusted fog for larger room
+        // Lighting setup
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+        const screenGlow = new THREE.PointLight(0xffffff, 1.5, 30);
+        screenGlow.position.set(0, 5, -8);
+        scene.add(screenGlow);
 
-        const camera = new THREE.PerspectiveCamera(52, W / H, 0.1, 150);
-        camera.position.set(0, 18, 28);
-        camera.lookAt(0, 5, -6);
-
-        // ── LIGHTING ──
-        const ambLight = new THREE.AmbientLight(0xfff5e8, 1.2);
-        scene.add(ambLight);
-        // Ceiling lights adjusted for a larger room
-        const ceilLights = [];
-        [[-12, 12.5, 0], [0, 12.5, 0], [12, 12.5, 0], [-12, 12.5, 8], [0, 12.5, 8], [12, 12.5, 8],
-        [-12, 12.5, 16], [0, 12.5, 16], [12, 12.5, 16]
-        ].forEach(([x, y, z]) => {
-            const pl = new THREE.PointLight(0xfff0d8, 1.4, 22, 1.5);
-            pl.position.set(x, y, z); scene.add(pl);
-            const bulb = new THREE.Mesh(new THREE.CircleGeometry(.2, 10), new THREE.MeshBasicMaterial({ color: 0xfffde8, side: THREE.DoubleSide }));
-            bulb.rotation.x = Math.PI / 2; bulb.position.set(x, y + .4, z); scene.add(bulb);
-            const box = new THREE.Mesh(new THREE.BoxGeometry(.5, .2, .5), new THREE.MeshLambertMaterial({ color: 0x1a1a22 }));
-            box.position.set(x, y + .45, z); scene.add(box);
-            ceilLights.push({ pl, bulb });
-        });
-        // Wall sconces
-        const sconces = [];
-        [-23.5, 23.5].forEach(x => {
-            for (let z = -8; z <= 20; z += 6) {
-                const wl = new THREE.PointLight(0xffddaa, 1.0, 15, 1.8);
-                wl.position.set(x, 6, z); scene.add(wl);
-                sconces.push(wl);
-            }
-        });
-        const scrGlow = new THREE.PointLight(0xffeedd, 1.5, 25);
-        scrGlow.position.set(0, 8, -12); scene.add(scrGlow);
-        const scrGlow2 = new THREE.PointLight(0xfff0e0, 1.0, 15);
-        scrGlow2.position.set(0, 3, -10); scene.add(scrGlow2);
-        const floorBounce = new THREE.PointLight(0xddaa77, .5, 18);
-        floorBounce.position.set(0, 1, 5);
-        scene.add(floorBounce);
-
-        const MK = c => new THREE.MeshLambertMaterial({ color: c });
-
-        // ── STATIC GEOMETRY (Greatly Expanded Room) ──
-        const floor = new THREE.Mesh(new THREE.PlaneGeometry(55, 55), MK(0x131318));
-        floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
-        const aisle = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 50), MK(0x18181f));
-        aisle.rotation.x = -Math.PI / 2; aisle.position.set(0, .01, 5); scene.add(aisle);
-
-        // Walls pushed out to fit 75ft+ screens
-        const wallMeshes = [];
-        [
-            [55, 40, Math.PI / 2, [-27, 20, 0]], // Left wall
-            [55, 40, -Math.PI / 2, [27, 20, 0]], // Right wall
-            [55, 40, 0, [0, 20, 27]],          // Back wall
-            [55, 40, Math.PI, [0, 20, -22]],   // Front wall (behind screen)
-        ].forEach(([w, h, ry, pos]) => {
-            const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), MK(0x1b1b24));
-            m.rotation.y = ry; m.position.set(...pos); scene.add(m);
-            wallMeshes.push(m);
-        });
-        const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(55, 55), MK(0x0f0f14));
-        ceiling.rotation.x = Math.PI / 2; ceiling.position.y = 24; scene.add(ceiling);
-
-        // Acoustic panels
-        const acousticPanels = [];
-        [-26.6, 26.6].forEach(x => {
-            for (let i = 0; i < 8; i++) {
-                const p = new THREE.Mesh(new THREE.BoxGeometry(.15, 3.0, 1.2), MK(0x242430));
-                p.position.set(x, 3 + i * 1.5, 1 + i * 1.5); scene.add(p);
-                acousticPanels.push(p);
-            }
-        });
-
-        let customFormatDecor = [];
-
-        // ── SCREEN (dynamic & accurately scaled) ──
-        let scrMesh, sFrameMesh, curtL, curtR, pelmet;
-        let sxWallL = null, sxWallR = null;
-
-        function buildScreen(fmt) {
-            // Remove old elements
-            [scrMesh, sFrameMesh, curtL, curtR, pelmet, sxWallL, sxWallR].forEach(m => { if (m) scene.remove(m) });
-            customFormatDecor.forEach(m => scene.remove(m));
-            customFormatDecor.length = 0;
-
-            // Determine realistic cinematic aspect ratio
-            let aspect = 2.39; // Default scope
-            if (fmt.isImax) aspect = 1.90; // IMAX ratio
-
-            // 1 Three.js unit is approximately 2.22 feet. 
-            // Multiplier translates ScreenFt accurately into 3D space.
-            const scrW = fmt.screenFt * 0.45;
-            const scrH = scrW / aspect;
-            const scrZ = -18; // Pushed back significantly to fit rows
-            const screenCY = scrH / 2 + 2.5; // Lift up slightly higher from floor
-
-            // Screen surface — Curved for IMAX
-            const scrGeom = new THREE.PlaneGeometry(scrW, scrH, fmt.isImax ? 32 : 1, 1);
-            if (fmt.isImax) {
-                const pos = scrGeom.attributes.position;
-                for (let i = 0; i < pos.count; i++) {
-                    const x = pos.getX(i);
-                    // curve forward at the side edges
-                    const zOffset = Math.pow(Math.abs(x) / (scrW / 2), 2) * 2.0;
-                    pos.setZ(i, zOffset);
-                }
-                scrGeom.computeVertexNormals();
-            }
-
-            scrMesh = new THREE.Mesh(scrGeom, new THREE.MeshBasicMaterial({ color: 0x0a0a18 }));
-            scrMesh.position.set(0, screenCY, scrZ);
-            scene.add(scrMesh);
-
-            // Apply video if ready
-            if (vt) scrMesh.material = new THREE.MeshBasicMaterial({ map: vt });
-
-            const curtainHex = fmt.theme ? fmt.theme.curtainHex : 0x470c08;
-
-            if (!fmt.isImax) {
-                // Black Frame
-                sFrameMesh = new THREE.Mesh(new THREE.BoxGeometry(scrW + .8, scrH + .8, .12), MK(0x050508));
-                sFrameMesh.position.set(0, screenCY, scrZ - .07); scene.add(sFrameMesh);
-
-                // Side Curtains
-                curtL = new THREE.Mesh(new THREE.BoxGeometry(3.0, scrH + 1.4, .24), MK(curtainHex));
-                curtL.position.set(-(scrW / 2 + 1.5), screenCY, scrZ); scene.add(curtL);
-                curtR = new THREE.Mesh(new THREE.BoxGeometry(3.0, scrH + 1.4, .24), MK(curtainHex));
-                curtR.position.set(scrW / 2 + 1.5, screenCY, scrZ); scene.add(curtR);
-
-                // Top Pelmet
-                pelmet = new THREE.Mesh(new THREE.BoxGeometry(scrW + 6.0, 1.2, .5), MK(curtainHex));
-                pelmet.position.set(0, screenCY + scrH / 2 + 0.6, scrZ); scene.add(pelmet);
-            } else {
-                // IMAX Custom Neon Accent strips as described in image 2
-                const barGeom = new THREE.BoxGeometry(0.5, scrH + 2, 0.5);
-                const barMat = new THREE.MeshBasicMaterial({ color: 0x0055ff });
-                const barL = new THREE.Mesh(barGeom, barMat);
-                barL.position.set(-(scrW / 2 + 0.8), screenCY, scrZ + 1.8);
-                scene.add(barL);
-                const barR = new THREE.Mesh(barGeom, barMat);
-                barR.position.set(scrW / 2 + 0.8, screenCY, scrZ + 1.8);
-                scene.add(barR);
-                customFormatDecor.push(barL, barR);
-
-                const glowL = new THREE.PointLight(0x0055ff, 1.5, 25);
-                glowL.position.set(-(scrW / 2 + 1.5), screenCY, scrZ + 3);
-                scene.add(glowL);
-                const glowR = new THREE.PointLight(0x0055ff, 1.5, 25);
-                glowR.position.set(scrW / 2 + 1.5, screenCY, scrZ + 3);
-                scene.add(glowR);
-                customFormatDecor.push(glowL, glowR);
-            }
-
-            // ScreenX 270-degree side walls
-            if (fmt.screenxWall) {
-                const wxMat = new THREE.MeshBasicMaterial({ color: 0x0a0a18, side: THREE.DoubleSide });
-                const sxDepth = 25; // Length of the projection along side walls
-                sxWallL = new THREE.Mesh(new THREE.PlaneGeometry(sxDepth, scrH), wxMat.clone());
-                sxWallL.rotation.y = Math.PI / 2;
-                sxWallL.position.set(-(scrW / 2), screenCY, scrZ + sxDepth / 2);
-                scene.add(sxWallL);
-
-                sxWallR = new THREE.Mesh(new THREE.PlaneGeometry(sxDepth, scrH), wxMat.clone());
-                sxWallR.rotation.y = -Math.PI / 2;
-                sxWallR.position.set(scrW / 2, screenCY, scrZ + sxDepth / 2);
-                scene.add(sxWallR);
-
-                if (vt) {
-                    sxWallL.material = new THREE.MeshBasicMaterial({ map: vt, side: THREE.DoubleSide });
-                    sxWallR.material = new THREE.MeshBasicMaterial({ map: vt, side: THREE.DoubleSide });
-                }
-            }
-            return { scrW, scrH, scrZ, screenCY };
-        }
-
-        // ── STEPS ──
-        const stepMeshes = [];
-        function buildSteps(rows) {
-            stepMeshes.forEach(m => scene.remove(m)); stepMeshes.length = 0;
-            const numSteps = Math.min(rows, 18);
-            for (let r = 0; r < numSteps; r++) {
-                const z = -12 + r * 1.15, y = r * .45; // Steeper y-rake for large screens
-                const s = new THREE.Mesh(new THREE.BoxGeometry(46, .08, 1.1), MK(0x14141a));
-                s.position.set(0, y, z); s.receiveShadow = true; scene.add(s); stepMeshes.push(s);
-                const rs = new THREE.Mesh(new THREE.BoxGeometry(46, .45, .06), MK(0x0e0e14));
-                rs.position.set(0, y - .22, z - .54); scene.add(rs); stepMeshes.push(rs);
-            }
-        }
-
-        // ── ENTRY MARKERS ──
-        const entryMarkers = [];
-        function buildEntryMarkers(fmt, seatGrid) {
-            entryMarkers.forEach(m => scene.remove(m)); entryMarkers.length = 0;
-            if (!seatGrid.length) return;
-
-            const mMat = new THREE.MeshBasicMaterial({ color: 0x22cc55 });
-            function addMarker(x, y, z) {
-                const m = new THREE.Mesh(new THREE.BoxGeometry(.4, .05, .4), mMat);
-                m.position.set(x, y + .1, z);
-                const glow = new THREE.PointLight(0x22cc55, .9, 3.0);
-                glow.position.set(x, y + .4, z);
-                scene.add(m); scene.add(glow); entryMarkers.push(m, glow);
-            }
-
-            const rows = fmt.rows, cols = fmt.cols;
-            const sc = fmt.seatScale; const spcX = .95 * sc; const spcZ = 1.1;
-            const baseZ = -12; // Aligned with the new seating start position
-
-            if (fmt.entry === 'rear' || fmt.entry === 'rear-side') {
-                const lastRow = rows - 1;
-                const z = baseZ + lastRow * spcZ + (lastRow >= fmt.aisleAfterRow && fmt.aisleAfterRow >= 0 ? .6 : 0) + 1.0;
-                const xL = -(cols / 2) * spcX - 1.0, xR = (cols / 2) * spcX + 1.0;
-                const y = lastRow * .45;
-                addMarker(xL, y, z); addMarker(xR, y, z);
-            }
-            if (fmt.entry === 'middle') {
-                const ar = fmt.aisleAfterRow;
-                const z = baseZ + ar * spcZ + .3;
-                const xL = -(cols / 2) * spcX - 1.0, xR = (cols / 2) * spcX + 1.0;
-                const y = ar * .45;
-                addMarker(xL, y, z); addMarker(xR, y, z);
-            }
-            if (fmt.entry === 'both') {
-                // front
-                const z0 = baseZ - 1.5, y0 = 0;
-                const xL = -(cols / 2) * spcX - 1.0, xR = (cols / 2) * spcX + 1.0;
-                addMarker(xL, y0, z0); addMarker(xR, y0, z0);
-                // rear
-                const lastRow = rows - 1;
-                const zN = baseZ + lastRow * spcZ + 1.0, yN = lastRow * .45;
-                addMarker(xL, yN, zN); addMarker(xR, yN, zN);
-            }
-        }
-
-        // ── SEAT COLORS ──
-        const SC = {
-            c: 0x3a7bd5, b: 0x2e63b0,
-            tc: 0x2e2e3a, tb: 0x242433,
-            sc: 0x22cc66, sb: 0x1aaa55,
-            hc: 0x66aaff, hb: 0x5599ee,
-            rc: 0xe8a30a, rb: 0xc08008,
-            bc: 0xff4488, bb: 0xcc2266,
+        const matCache = {
+            floor: new THREE.MeshStandardMaterial({ color: 0x111116, roughness: 0.9 }),
+            wall: new THREE.MeshStandardMaterial({ color: 0x0a0a0f, roughness: 1.0 }),
+            ceiling: new THREE.MeshStandardMaterial({ color: 0x050508, roughness: 1.0 })
         };
 
-        // ── SEAT BUILDER ──
-        const seatGroups = [];
-        let selectedSeat = null, hoveredSeat = null;
+        let roomGroup = new THREE.Group();
+        scene.add(roomGroup);
 
-        function clearSeats() {
-            seatGroups.forEach(g => scene.remove(g));
-            seatGroups.length = 0; selectedSeat = null; hoveredSeat = null;
-        }
+        // Widened room to prevent screen clipping
+        const floor = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), matCache.floor);
+        floor.rotation.x = -Math.PI / 2; floor.position.y = 0; floor.receiveShadow = true;
+        roomGroup.add(floor);
 
-        function makeSeat(row, col, fmt, takenSet, seatInfo) {
-            const key = `${row}-${col}`;
-            const isRestricted = seatInfo.restricted;
-            const isTaken = takenSet.has(key) || isRestricted;
-            const sc = fmt.seatScale;
-            const g = new THREE.Group();
+        const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), matCache.ceiling);
+        ceiling.rotation.x = Math.PI / 2; ceiling.position.y = 22; // High roof
+        roomGroup.add(ceiling);
 
-            let cCol = SC.c, bCol = SC.b;
-            if (isRestricted) { cCol = SC.rc; bCol = SC.rb; }
-            else if (isTaken) { cCol = SC.tc; bCol = SC.tb; }
+        const wallL = new THREE.Mesh(new THREE.PlaneGeometry(80, 40), matCache.wall);
+        wallL.rotation.y = Math.PI / 2; wallL.position.set(-35, 15, 0);
+        roomGroup.add(wallL);
 
-            const cM = new THREE.MeshLambertMaterial({ color: cCol });
-            const bM = new THREE.MeshLambertMaterial({ color: bCol });
-            const aM = new THREE.MeshLambertMaterial({ color: 0x1e2232 });
-            const lM = new THREE.MeshLambertMaterial({ color: 0x111120 });
+        const wallR = new THREE.Mesh(new THREE.PlaneGeometry(80, 40), matCache.wall);
+        wallR.rotation.y = -Math.PI / 2; wallR.position.set(35, 15, 0);
+        roomGroup.add(wallR);
 
-            const cW = .72 * sc, cD = .55 * sc, bH = .65 * sc;
-            const cushion = new THREE.Mesh(new THREE.BoxGeometry(cW, .11, cD), cM);
-            cushion.position.set(0, .28, 0); cushion.castShadow = true; g.add(cushion);
-            const lip = new THREE.Mesh(new THREE.BoxGeometry(cW, .06, .07), cM);
-            lip.position.set(0, .23, -(cD / 2 + .02)); g.add(lip);
-            const backrest = new THREE.Mesh(new THREE.BoxGeometry(cW, bH, .11), bM);
-            backrest.position.set(0, .34 + bH / 2, cD / 2 - .02); backrest.castShadow = true; g.add(backrest);
-            const head = new THREE.Mesh(new THREE.BoxGeometry(cW * .85, .13, .15), bM);
-            head.position.set(0, .34 + bH + .06, cD / 2 - .03); g.add(head);
-            const arW = .09 * sc;
-            [-(cW / 2 + arW / 2), (cW / 2 + arW / 2)].forEach(ax => {
-                const ar = new THREE.Mesh(new THREE.BoxGeometry(arW, .07, cD * .9), aM);
-                ar.position.set(ax, .35, 0); g.add(ar);
-            });
-            [[-(cW * .37), -(cD * .36)], [-(cW * .37), (cD * .36)], [(cW * .37), -(cD * .36)], [(cW * .37), (cD * .36)]].forEach(([lx, lz]) => {
-                const leg = new THREE.Mesh(new THREE.BoxGeometry(.05, .29, .05), lM);
-                leg.position.set(lx, .1, lz); g.add(leg);
-            });
-            const bar = new THREE.Mesh(new THREE.BoxGeometry(cW * .88, .04, .04), lM);
-            bar.position.set(0, .03, 0); g.add(bar);
+        const wallB = new THREE.Mesh(new THREE.PlaneGeometry(80, 40), matCache.wall);
+        wallB.position.set(0, 15, -20);
+        roomGroup.add(wallB);
 
-            const spcX = .95 * sc;
-            const spcZ = 1.1;
-
-            // Custom features per format
-            if (fmt.shortName === 'LUXURY') {
-                // Add elegant premium side table with glowing warm lamp matching image 3
-                const tW = .20 * sc, tH = .30 * sc, tD = .45 * sc;
-                const table = new THREE.Mesh(new THREE.BoxGeometry(tW, tH, tD), new THREE.MeshLambertMaterial({ color: 0x2b1a0e }));
-                table.position.set(cW / 2 + tW / 2 + .02, tH / 2, 0);
-                g.add(table);
-                const lW = .10 * sc, lH = .16 * sc;
-                const lamp = new THREE.Mesh(new THREE.BoxGeometry(lW, lH, lW), new THREE.MeshBasicMaterial({ color: 0xffdd88 }));
-                lamp.position.set(cW / 2 + tW / 2 + .02, tH + lH / 2, 0);
-                g.add(lamp);
-            }
-
-            if (fmt.shortName === '4DX' && col % fmt.blockSize === 0) {
-                // Add robust dynamic motion base platform under each block of 4 seats matching image 4
-                const pW = 3 * spcX + cW + 0.1;
-                const plat = new THREE.Mesh(new THREE.BoxGeometry(pW, 0.08, cD * 1.3), new THREE.MeshLambertMaterial({ color: 0x222936 }));
-                plat.position.set(1.5 * spcX, 0.04, 0);
-                g.add(plat);
-            }
-
-            // Position
-            let extraX = 0;
-            if (fmt.blockSize > 0) {
-                const blockIdx = Math.floor(col / fmt.blockSize);
-                extraX = blockIdx * .28;
-            }
-            const x = (col - (fmt.cols - 1) / 2) * spcX + extraX;
-            let extraZ = 0;
-            if (fmt.aisleAfterRow >= 0 && row > fmt.aisleAfterRow) extraZ = .65;
-            const y = row * .45; // Steeper rake
-            const z = -12 + row * spcZ + extraZ; // Pushed back
-            g.position.set(x, y, z);
-
-            g.userData = {
-                row, col, key, isTaken, isRestricted,
-                cushionMesh: cushion, backrestMesh: backrest,
-                isSelected: false, clickable: !isTaken && !isRestricted,
-                blockGroup: fmt.blockSize > 0 ? Math.floor(col / fmt.blockSize) : -1
-            };
-            seatGroups.push(g); scene.add(g);
-        }
-
-        function buildSeats(fmt) {
-            clearSeats();
-            const takenSet = new Set();
-
-            for (let r = 0; r < fmt.rows; r++) {
-                for (let c = 0; c < fmt.cols; c++) {
-                    const restricted = fmt.screenxWall && (c < 3 || c >= fmt.cols - 3);
-                    makeSeat(r, c, fmt, takenSet, { restricted });
-                }
-            }
-        }
-
-        function setColor(sg, state) {
-            if (!sg) return;
-            const { cushionMesh: cu, backrestMesh: bk, isRestricted } = sg.userData;
-            if (isRestricted) return;
-            const m = { avail: [SC.c, SC.b], taken: [SC.tc, SC.tb], sel: [SC.sc, SC.sb], hover: [SC.hc, SC.hb] };
-            const [cc, bc] = m[state] || m.avail;
-            cu.material.color.setHex(cc); bk.material.color.setHex(bc);
-        }
-
-        // ── VIDEO ──
-        let vt = null, videoStarted = false;
+        let vt = null;
         const videoEl = document.createElement('video');
         videoEl.crossOrigin = 'anonymous';
         videoEl.src = 'https://res.cloudinary.com/dtqpztniu/video/upload/v1778613522/Dune__Part_Three___Official_Teaser_Trailer_hhdcdu.mp4';
-        videoEl.loop = true; videoEl.muted = true; videoEl.playsInline = true; videoEl.preload = 'auto';
-        videoEl.style.cssText = 'position:absolute;opacity:0;pointer-events:none;width:1px;height:1px';
-        document.body.appendChild(videoEl);
-
-        function applyVideoToScreens() {
-            if (!vt) return;
-            const mat = new THREE.MeshBasicMaterial({ map: vt });
-            if (scrMesh) scrMesh.material = mat;
-            if (sxWallL) sxWallL.material = new THREE.MeshBasicMaterial({ map: vt, side: THREE.DoubleSide });
-            if (sxWallR) sxWallR.material = new THREE.MeshBasicMaterial({ map: vt, side: THREE.DoubleSide });
-        }
+        videoEl.loop = true; videoEl.muted = true; videoEl.playsInline = true;
 
         function startVideo() {
-            if (videoStarted) return; videoStarted = true;
+            if (!videoEl.paused) return;
             videoEl.play().then(() => {
                 if (!vt) {
                     vt = new THREE.VideoTexture(videoEl);
-                    vt.minFilter = THREE.LinearFilter; vt.magFilter = THREE.LinearFilter;
-                    vt.format = THREE.RGBFormat; vt.generateMipmaps = false;
+                    vt.minFilter = THREE.LinearFilter;
+                    vt.magFilter = THREE.LinearFilter;
+                    vt.format = THREE.RGBFormat;
                 }
                 applyVideoToScreens();
-                document.getElementById('playoverlay').style.display = 'none';
-            }).catch(() => {
-                videoStarted = false;
-                document.getElementById('playoverlay').style.display = 'flex';
-            });
+                document.getElementById('playoverlay').style.opacity = '0';
+                setTimeout(() => document.getElementById('playoverlay').style.display = 'none', 400);
+            }).catch(e => console.log("Autoplay prevented"));
         }
-        videoEl.addEventListener('canplaythrough', startVideo);
-        videoEl.addEventListener('loadeddata', startVideo);
-        videoEl.addEventListener('loadedmetadata', () => { if (!videoStarted) startVideo(); });
-        videoEl.addEventListener('error', () => document.getElementById('playoverlay').style.display = 'flex');
-        videoEl.load();
-        document.getElementById('playoverlay').addEventListener('click', () => { videoStarted = false; startVideo(); });
-        canvas.addEventListener('click', () => { if (!videoStarted) startVideo(); });
+        document.getElementById('playoverlay').addEventListener('click', startVideo);
 
-        // ═══════════════════════════════════════════════
-        //  LOAD FORMAT — master function
-        // ═══════════════════════════════════════════════
-        let currentFmt = null, currentFmtKey = 'standard';
+        let dynamicMeshes = [];
+        let scrCenterMesh = null, scrLeftMesh = null, scrRightMesh = null;
+
+        function cleanupDynamicMeshes() {
+            dynamicMeshes.forEach(mesh => {
+                scene.remove(mesh);
+                if (mesh.geometry) mesh.geometry.dispose();
+                if (mesh.material) {
+                    if (Array.isArray(mesh.material)) mesh.material.forEach(m => m.dispose());
+                    else mesh.material.dispose();
+                }
+            });
+            dynamicMeshes = [];
+            scrCenterMesh = scrLeftMesh = scrRightMesh = null;
+        }
+
+        function buildScreen(fmt) {
+            const zPos = -14;
+            const yPos = fmt.screenH / 2 + 1.5;
+            const baseMat = new THREE.MeshBasicMaterial({ color: 0x222222 });
+
+            if (fmt.isImax) {
+                // IMAX Curved Screen
+                const radius = 28;
+                const theta = fmt.screenW / radius;
+                const geo = new THREE.CylinderGeometry(radius, radius, fmt.screenH, 32, 1, true, -theta / 2 + Math.PI / 2, theta);
+                scrCenterMesh = new THREE.Mesh(geo, baseMat);
+                scrCenterMesh.position.set(0, yPos, zPos + radius - 2);
+                scrCenterMesh.rotation.y = -Math.PI / 2;
+                geo.scale(-1, 1, 1); // Reverse for inner view
+                scene.add(scrCenterMesh);
+                dynamicMeshes.push(scrCenterMesh);
+                ceiling.visible = false; // Remove roof for IMAX
+            } else {
+                ceiling.visible = true;
+                // Flat Screen
+                const geo = new THREE.PlaneGeometry(fmt.screenW, fmt.screenH);
+                scrCenterMesh = new THREE.Mesh(geo, baseMat);
+                scrCenterMesh.position.set(0, yPos, zPos);
+                scene.add(scrCenterMesh);
+                dynamicMeshes.push(scrCenterMesh);
+
+                // ScreenX Side Walls
+                if (fmt.isScreenX) {
+                    const sideW = 20;
+                    const sideGeo = new THREE.PlaneGeometry(sideW, fmt.screenH);
+
+                    scrLeftMesh = new THREE.Mesh(sideGeo, baseMat);
+                    scrLeftMesh.position.set(-fmt.screenW / 2, yPos, zPos + sideW / 2);
+                    scrLeftMesh.rotation.y = Math.PI / 2;
+                    scene.add(scrLeftMesh); dynamicMeshes.push(scrLeftMesh);
+
+                    scrRightMesh = new THREE.Mesh(sideGeo, baseMat);
+                    scrRightMesh.position.set(fmt.screenW / 2, yPos, zPos + sideW / 2);
+                    scrRightMesh.rotation.y = -Math.PI / 2;
+                    scene.add(scrRightMesh); dynamicMeshes.push(scrRightMesh);
+                }
+            }
+        }
+
+        function applyVideoToScreens() {
+            if (!vt || !scrCenterMesh) return;
+            const vidMat = new THREE.MeshBasicMaterial({ map: vt, side: THREE.DoubleSide });
+            if (scrCenterMesh) scrCenterMesh.material = vidMat;
+            if (scrLeftMesh) scrLeftMesh.material = vidMat;
+            if (scrRightMesh) scrRightMesh.material = vidMat;
+        }
+
+        let seatGroups = [];
+        let currentFmt = FORMATS.standard;
+
+        function buildSeats(fmt) {
+            seatGroups = [];
+            const isLux = fmt.isLuxury, is4DX = fmt.is4DX, isImax = fmt.isImax;
+
+            // Dimensions
+            const w = isLux ? 1.4 : 0.8, d = isLux ? 1.2 : 0.7, h = isLux ? 1.1 : 0.9;
+            const spcX = isLux ? 1.8 : 1.0, spcZ = isLux ? 2.5 : 1.2;
+            const pitchY = isImax ? 0.65 : (isLux ? 0.3 : 0.4);
+
+            const startZ = -5;
+            const centerCol = (fmt.cols - 1) / 2;
+
+            const cSeat = fmt.colorTheme.seat;
+            const cBack = is4DX ? 0x111111 : cSeat;
+
+            const matCushion = new THREE.MeshStandardMaterial({ color: cSeat, roughness: 0.7 });
+            const matBack = new THREE.MeshStandardMaterial({ color: cBack, roughness: 0.7 });
+            const matFrame = new THREE.MeshStandardMaterial({ color: 0x111111 });
+
+            for (let r = 0; r < fmt.rows; r++) {
+                for (let c = 0; c < fmt.cols; c++) {
+                    let x = (c - centerCol) * spcX;
+                    let z = startZ + (r * spcZ);
+                    let y = r * pitchY;
+                    let rotY = 0;
+
+                    // 4DX Blocks
+                    if (is4DX) {
+                        const block = Math.floor(c / 4);
+                        x += block * 0.8;
+                    }
+
+                    // IMAX Curve Math
+                    if (isImax) {
+                        const offset = Math.abs(c - centerCol);
+                        z -= Math.pow(offset, 2) * 0.025;
+                        rotY = (centerCol - c) * 0.03;
+                    }
+
+                    const sg = new THREE.Group();
+                    sg.position.set(x, y, z);
+                    if (rotY) sg.rotation.y = rotY;
+
+                    const cushion = new THREE.Mesh(new THREE.BoxGeometry(w, 0.15, d), matCushion);
+                    cushion.position.set(0, 0.3, 0); cushion.castShadow = true; sg.add(cushion);
+
+                    const back = new THREE.Mesh(new THREE.BoxGeometry(w, h, 0.15), matBack);
+                    back.position.set(0, 0.3 + h / 2, d / 2 - 0.07);
+                    if (isLux) back.rotation.x = -0.15; // Recline
+                    back.castShadow = true; sg.add(back);
+
+                    const armW = 0.15;
+                    const armL = new THREE.Mesh(new THREE.BoxGeometry(armW, 0.1, d * 0.9), matFrame);
+                    armL.position.set(-w / 2 - armW / 2, 0.5, 0); sg.add(armL);
+                    const armR = armL.clone();
+                    armR.position.set(w / 2 + armW / 2, 0.5, 0); sg.add(armR);
+
+                    if (isLux) {
+                        const tray = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.05, 0.4), new THREE.MeshStandardMaterial({ color: 0x333333 }));
+                        tray.position.set(w / 2 + armW / 2, 0.6, 0.2); sg.add(tray);
+                    }
+
+                    const base = new THREE.Mesh(new THREE.BoxGeometry(w * 0.6, 0.3, d * 0.6), matFrame);
+                    base.position.set(0, 0.15, 0); sg.add(base);
+
+                    sg.userData = { row: r, col: c, isSeat: true, baseColor: cSeat };
+                    cushion.userData = sg.userData; back.userData = sg.userData;
+
+                    scene.add(sg);
+                    dynamicMeshes.push(sg, cushion, back, armL, armR, base);
+                    seatGroups.push(sg);
+                }
+            }
+        }
 
         function loadFormat(key) {
-            currentFmtKey = key;
-            let fmt = { ...FORMATS[key] };
+            const fmt = FORMATS[key];
+            if (!fmt) return;
             currentFmt = fmt;
 
-            // Apply immersive format theme colors & lighting
-            if (fmt.theme) {
-                SC.c = fmt.theme.seatCushion;
-                SC.b = fmt.theme.seatBack;
-                scene.background.setHex(fmt.theme.floorHex);
-                if (scene.fog) scene.fog.color.setHex(fmt.theme.floorHex);
-                if (typeof ambLight !== 'undefined' && ambLight) {
-                    ambLight.color.setHex(fmt.theme.ambHex);
-                    ambLight.intensity = fmt.theme.ambInt;
-                }
-                if (typeof floor !== 'undefined' && floor) floor.material.color.setHex(fmt.theme.floorHex);
-                if (typeof wallMeshes !== 'undefined') wallMeshes.forEach(m => m.material.color.setHex(fmt.theme.wallHex));
-                if (typeof acousticPanels !== 'undefined') acousticPanels.forEach(p => p.material.color.setHex(fmt.theme.panelHex));
-                if (typeof sconces !== 'undefined') sconces.forEach(l => {
-                    l.color.setHex(fmt.theme.sconceHex);
-                    l.intensity = fmt.theme.sconceInt;
-                });
-            }
+            // UI Updates
+            const badge = document.getElementById('fmtBadge');
+            badge.textContent = fmt.id.toUpperCase();
+            badge.className = `inline-block border text-xs font-bold px-4 py-1.5 rounded-full tracking-widest mb-2 transition-colors ${fmt.badgeClass}`;
+            document.getElementById('fmtInfo').innerHTML = fmt.desc;
 
-            // Remove roof for IMAX so the giant screen doesn't clip through
-            if (typeof ceiling !== 'undefined') {
-                ceiling.visible = !fmt.isImax;
-            }
+            // Environment Lighting Updates
+            ambientLight.color.setHex(fmt.colorTheme.ambient);
+            ambientLight.intensity = fmt.colorTheme.lightInt;
+            screenGlow.color.setHex(fmt.colorTheme.ambient);
 
-            const tt = document.getElementById('fmtTooltip');
-            document.getElementById('ftt-name').textContent = fmt.name;
-            document.getElementById('ftt-desc').textContent = fmt.desc;
-            tt.style.opacity = '1';
-            setTimeout(() => tt.style.opacity = '0', 1800);
-
-            document.getElementById('fmtBadge').textContent = fmt.shortName;
-            document.getElementById('fmtInfo').innerHTML =
-                `${fmt.rows} rows &nbsp;·&nbsp; ${fmt.cols} seats/row &nbsp;·&nbsp; ${fmt.rows * fmt.cols} total<br>${fmt.desc}`;
-
+            cleanupDynamicMeshes();
             buildScreen(fmt);
-            buildSteps(fmt.rows);
             buildSeats(fmt);
-            buildEntryMarkers(fmt, [...seatGroups]);
-
-            document.getElementById('selpanel').style.display = 'none';
-            document.getElementById('hint').style.opacity = '1';
-
-            if (mode === 'seatview' || mode === 'animating') {
-                mode = 'overview';
-                document.getElementById('backbtn').style.display = 'none';
-                document.getElementById('modeLabel').textContent = 'OVERVIEW';
-                tTh = 0; tPh = .38; tR = 28; // Reset to wide angle
-            }
-
             applyVideoToScreens();
+
+            resetToOverview();
         }
 
-        // ═══════════════════════════════════════════════
-        //  CAMERA CONTROLS
-        // ═══════════════════════════════════════════════
-        let isDrag = false, px = 0, py = 0;
-        let camTh = 0, camPh = .38, camR = 28; // Pushed back radius
-        let tTh = 0, tPh = .38, tR = 28;
-        let mode = 'overview', svX = 0, svY = 0;
+        document.getElementById('formatSelect').addEventListener('change', (e) => loadFormat(e.target.value));
 
-        canvas.addEventListener('mousedown', e => { isDrag = true; px = e.clientX; py = e.clientY; });
-        window.addEventListener('mouseup', e => {
-            if (isDrag && Math.abs(e.clientX - px) < 5 && Math.abs(e.clientY - py) < 5) {
-                const r = canvas.getBoundingClientRect();
-                handleClick(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        let hoveredSeat = null;
+        let selectedSeat = null;
+
+        // Control States
+        let mode = 'overview';
+        let overviewAngles = { th: 0, ph: 0.5 };
+        let overviewRadius = 25;
+        let isDragging = false;
+        let prevMouse = { x: 0, y: 0 };
+        let seatViewAngles = { x: 0, y: 0 };
+
+        function getIntersects(event) {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+            return raycaster.intersectObjects(scene.children, true).filter(hit => hit.object.userData && hit.object.userData.isSeat);
+        }
+
+        // Spherical dragging in overview, mouse look in seatview
+        canvas.addEventListener('mousedown', (e) => { isDragging = true; prevMouse = { x: e.clientX, y: e.clientY }; });
+        window.addEventListener('mouseup', () => { isDragging = false; });
+        canvas.addEventListener('mouseleave', () => { isDragging = false; });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDragging && mode === 'overview') {
+                const dx = e.clientX - prevMouse.x;
+                const dy = e.clientY - prevMouse.y;
+                overviewAngles.th -= dx * 0.005;
+                overviewAngles.ph = Math.max(0.1, Math.min(Math.PI / 2 - 0.1, overviewAngles.ph - dy * 0.005));
+                prevMouse = { x: e.clientX, y: e.clientY };
+            } else if (mode === 'seatview') {
+                // True mouse look functionality restored
+                seatViewAngles.x = (e.clientX / window.innerWidth - 0.5) * 2;
+                seatViewAngles.y = -(e.clientY / window.innerHeight - 0.5);
             }
-            isDrag = false;
+
+            // Hover highlighting
+            if (mode === 'overview' && !isDragging) {
+                const hits = getIntersects(e);
+                if (hits.length > 0) {
+                    canvas.style.cursor = 'pointer';
+                    const rootGroup = hits[0].object.parent;
+                    if (hoveredSeat !== rootGroup) {
+                        if (hoveredSeat && hoveredSeat !== selectedSeat) resetSeatColor(hoveredSeat);
+                        hoveredSeat = rootGroup;
+                        if (hoveredSeat !== selectedSeat) highlightSeat(hoveredSeat, 0x38bdf8); // Light blue
+                    }
+                } else {
+                    canvas.style.cursor = 'grab';
+                    if (hoveredSeat && hoveredSeat !== selectedSeat) resetSeatColor(hoveredSeat);
+                    hoveredSeat = null;
+                }
+            }
         });
-        canvas.addEventListener('mousemove', e => {
-            if (isDrag && mode === 'overview') {
-                tTh -= (e.clientX - px) * .005;
-                tPh = Math.max(.05, Math.min(.85, tPh - (e.clientY - py) * .005));
-                px = e.clientX; py = e.clientY;
-            }
-            if (mode === 'seatview') {
-                const r = canvas.getBoundingClientRect();
-                svX = ((e.clientX - r.left) / r.width - .5) * .9;
-                svY = ((e.clientY - r.top) / r.height - .5) * .4;
-            }
-            if (mode === 'overview') {
-                const r = canvas.getBoundingClientRect();
-                checkHover(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
-            }
+
+        canvas.addEventListener('wheel', (e) => {
+            if (mode === 'overview') overviewRadius = Math.max(10, Math.min(45, overviewRadius + e.deltaY * 0.05));
         });
-        canvas.addEventListener('wheel', e => { tR = Math.max(10, Math.min(45, tR + e.deltaY * .015)); }, { passive: true });
 
-        // Touch interactions
-        canvas.addEventListener('touchstart', e => { const t = e.touches[0]; isDrag = true; px = t.clientX; py = t.clientY; });
-        canvas.addEventListener('touchmove', e => {
-            e.preventDefault();
-            const t = e.touches[0];
-            if (isDrag && mode === 'overview') {
-                tTh -= (t.clientX - px) * .005;
-                tPh = Math.max(.05, Math.min(.85, tPh - (t.clientY - py) * .005));
-                px = t.clientX; py = t.clientY;
-            }
-        }, { passive: false });
-        canvas.addEventListener('touchend', () => { isDrag = false; });
+        canvas.addEventListener('click', (e) => {
+            if (mode !== 'overview' || isDragging) return;
+            const hits = getIntersects(e);
+            if (hits.length > 0) selectSeat(hits[0].object.parent);
+            else deselectSeat();
+        });
 
-        // ── RAYCASTING ──
-        const ray = new THREE.Raycaster();
-        const mv = new THREE.Vector2();
-
-        function allSeatMeshes() {
-            const m = []; seatGroups.forEach(g => g.traverse(c => { if (c.isMesh) m.push(c); })); return m;
-        }
-        function getGroup(obj) {
-            let o = obj;
-            while (o && !o.userData.hasOwnProperty('clickable')) o = o.parent;
-            return o;
-        }
-        function checkHover(mx, my) {
-            mv.set(mx, my); ray.setFromCamera(mv, camera);
-            const hits = ray.intersectObjects(allSeatMeshes(), false);
-            const ng = hits.length ? getGroup(hits[0].object) : null;
-            const nv = ng && ng.userData.clickable ? ng : null;
-            if (nv !== hoveredSeat) {
-                if (hoveredSeat && !hoveredSeat.userData.isSelected) setColor(hoveredSeat, 'avail');
-                hoveredSeat = nv;
-                if (hoveredSeat && !hoveredSeat.userData.isSelected) setColor(hoveredSeat, 'hover');
-                canvas.style.cursor = hoveredSeat ? 'pointer' : 'grab';
-            }
+        function highlightSeat(group, hexColor) {
+            group.children.forEach(c => {
+                if (c.material && c.material.color && c.geometry.type === 'BoxGeometry' && c.position.y > 0.2) {
+                    c.material = c.material.clone();
+                    c.material.color.setHex(hexColor);
+                }
+            });
         }
 
-        // ═══════════════════════════════════════════════
-        //  SEAT SELECTION & INFO
-        // ═══════════════════════════════════════════════
-        const RN = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-
-        function calcSeatInfo(sg, fmt) {
-            const { row, col } = sg.userData;
-            const rowNum = row + 1;
-            const dist = rowNum * fmt.rowDepthFt;
-            const centerCol = (fmt.cols - 1) / 2;
-            const seatsOff = Math.abs(col - centerCol);
-            const angle = Math.round(seatsOff * fmt.anglePerSeat);
-
-            let tier = 'Main Floor';
-            if (fmt.isImax && fmt.aisleAfterRow >= 0) {
-                tier = row <= fmt.aisleAfterRow ? 'Lower Tier' : 'Upper Tier';
-            }
-
-            let score = 100;
-            if (row < 2) score -= 30;
-            else if (row < 4) score -= 10;
-            if (row >= fmt.rows - 2) score -= 10;
-            if (seatsOff > 10) score -= 30;
-            else if (seatsOff > 6) score -= 15;
-            if (fmt.screenxWall && (col < 3 || col >= fmt.cols - 3)) score -= 25;
-            if (fmt.blockSize > 0) {
-                const blockIdx = Math.floor(col / fmt.blockSize);
-                const numBlocks = Math.floor(fmt.cols / fmt.blockSize);
-                if (blockIdx === 0 || blockIdx === numBlocks - 1) score -= 10;
-            }
-            if (fmt.aisleAfterRow >= 0 && Math.abs(row - fmt.aisleAfterRow) <= 2) score += 5;
-            if (seatsOff <= 2) score += 10;
-            score = Math.max(0, Math.min(100, score));
-
-            return { dist, angle, tier, score };
+        function resetSeatColor(group) {
+            const baseHex = group.userData.baseColor || currentFmt.colorTheme.seat;
+            highlightSeat(group, baseHex);
+            if (currentFmt.is4DX) group.children[1].material.color.setHex(0x111111); // Restore black 4DX backrest
         }
 
-        function handleClick(mx, my) {
-            if (mode !== 'overview') return;
-            mv.set(mx, my); ray.setFromCamera(mv, camera);
-            const hits = ray.intersectObjects(allSeatMeshes(), false);
-            if (!hits.length) { deselect(); return; }
-            const g = getGroup(hits[0].object);
-            if (!g || !g.userData.clickable) return;
+        function selectSeat(group) {
+            if (selectedSeat) resetSeatColor(selectedSeat);
+            selectedSeat = group;
+            highlightSeat(selectedSeat, 0x10b981); // Emerald Green
 
-            if (currentFmt && currentFmt.blockSize > 0) {
-                seatGroups.forEach(sg => {
-                    if (sg.userData.isSelected) { setColor(sg, 'avail'); sg.userData.isSelected = false; }
-                });
-                const bi = g.userData.blockGroup;
-                seatGroups.filter(sg => sg.userData.blockGroup === bi && sg.userData.clickable).forEach(sg => {
-                    sg.userData.isSelected = true; setColor(sg, 'sel');
-                });
-                selectedSeat = g;
-            } else {
-                if (selectedSeat && selectedSeat !== g) { setColor(selectedSeat, 'avail'); selectedSeat.userData.isSelected = false; }
-                selectedSeat = g; g.userData.isSelected = true; setColor(g, 'sel');
-            }
+            const r = group.userData.row, c = group.userData.col;
+            const rowLetter = String.fromCharCode(65 + r);
+            const centerCol = (currentFmt.cols - 1) / 2;
+            const dist = Math.abs(currentFmt.rows - r) * 3 + 15;
+            const angle = Math.round(Math.abs(c - centerCol) * 2);
+            let tier = r < currentFmt.rows / 2 ? 'Front' : 'Rear';
+            if (currentFmt.isImax) tier = r < 5 ? 'Lower' : 'Upper';
 
-            const fmt = currentFmt || FORMATS.standard;
-            const info = calcSeatInfo(g, fmt);
+            document.getElementById('seltext').textContent = `ROW ${rowLetter}, SEAT ${c + 1}`;
+            document.getElementById('si-dist').textContent = `${dist} ft`;
+            document.getElementById('si-angle').textContent = `${angle}°`;
+            document.getElementById('si-tier').textContent = tier;
 
-            document.getElementById('seltext').textContent = `Row ${RN[g.userData.row]}, Seat ${g.userData.col + 1}`;
-            document.getElementById('si-dist').textContent = `${info.dist} ft `;
-            document.getElementById('si-angle').textContent = `${info.angle}° `;
-            document.getElementById('si-tier').textContent = info.tier;
-
-            const rf = document.getElementById('ratingFill');
-            const rl = document.getElementById('ratingLabel');
-            const re = document.getElementById('ratingEmoji');
-            rf.style.width = info.score + '%';
-            if (info.score >= 80) { rf.style.background = '#22cc66'; rl.textContent = 'Best'; re.textContent = '🟢'; }
-            else if (info.score >= 55) { rf.style.background = '#e8a30a'; rl.textContent = 'Good'; re.textContent = '🟡'; }
-            else { rf.style.background = '#e83a0a'; rl.textContent = 'Poor'; re.textContent = '🔴'; }
-
-            document.getElementById('selpanel').style.display = 'block';
-            document.getElementById('btnview').onclick = () => enterSeat(g);
+            document.getElementById('selpanel').classList.remove('hidden');
             document.getElementById('hint').style.opacity = '0';
         }
 
-        function deselect() {
-            seatGroups.forEach(sg => { if (sg.userData.isSelected) { setColor(sg, 'avail'); sg.userData.isSelected = false; } });
+        function deselectSeat() {
+            if (selectedSeat) resetSeatColor(selectedSeat);
             selectedSeat = null;
-            document.getElementById('selpanel').style.display = 'none';
+            document.getElementById('selpanel').classList.add('hidden');
             document.getElementById('hint').style.opacity = '1';
         }
 
-        // ═══════════════════════════════════════════════
-        //  SEAT VIEW TRANSITIONS
-        // ═══════════════════════════════════════════════
-        function enterSeat(sg) {
-            mode = 'animating';
-            document.getElementById('selpanel').style.display = 'none';
-            document.getElementById('modeLabel').textContent = 'SEAT VIEW';
-            const sp = sg.position;
-            const fmt = currentFmt || FORMATS.standard;
-            const startP = camera.position.clone();
-            const eyeH = sp.y + 1.25 + (fmt.seatScale > 1 ? .2 : 0);
-            const endP = new THREE.Vector3(sp.x, eyeH, sp.z + .55);
-            const sL = new THREE.Vector3(0, 5, -6);
+        // Smooth transitions into the seat
+        document.getElementById('btnview').addEventListener('click', () => {
+            if (!selectedSeat) return;
+            mode = 'animating_in';
+            document.getElementById('selpanel').classList.add('hidden');
 
-            // Calculate dynamic screen center for correct viewing angle
-            let aspect = 2.39;
-            if (fmt.isImax) aspect = 1.90;
-            const scrW = fmt.screenFt * 0.45;
-            const scrH = scrW / aspect;
-            const screenCY = scrH / 2 + 2.5;
+            const ml = document.getElementById('modeLabel');
+            ml.textContent = 'SEAT VIEW';
+            ml.className = "glass-panel text-green-400 text-xs px-3 py-1 rounded-full uppercase tracking-widest font-bold border border-green-500/40 shadow-[0_0_15px_rgba(34,197,94,0.3)] transition-all";
 
-            const eL = new THREE.Vector3(sp.x * .15, screenCY, -18);
-            let t = 0;
-            (function step() {
-                t += .018; const e = t < 1 ? t * t * (3 - 2 * t) : 1;
-                camera.position.lerpVectors(startP, endP, e);
-                camera.lookAt(new THREE.Vector3().lerpVectors(sL, eL, e));
-                if (t < 1) requestAnimationFrame(step);
-                else { mode = 'seatview'; document.getElementById('backbtn').style.display = 'block'; }
-            })();
-        }
+            document.getElementById('formatSelect').parentElement.classList.add('hidden');
 
-        function exitSeatView() {
-            mode = 'animating';
-            document.getElementById('backbtn').style.display = 'none';
-            document.getElementById('modeLabel').textContent = 'OVERVIEW';
-            deselect();
-            const startP = camera.position.clone();
-            const endP = new THREE.Vector3(
-                camR * Math.sin(tTh) * Math.cos(camPh),
-                camR * Math.sin(tPh) + 4,
-                camR * Math.cos(tTh) * Math.cos(camPh)
-            );
-            let t = 0;
-            (function step() {
-                t += .018; const e = t < 1 ? t * t * (3 - 2 * t) : 1;
-                camera.position.lerpVectors(startP, endP, e);
-                camera.lookAt(0, 5, -6);
-                if (t < 1) requestAnimationFrame(step);
-                else { mode = 'overview'; document.getElementById('hint').style.opacity = '1'; }
-            })();
-        }
+            // Calculate Eye Position (Accurate to recliner vs standard height)
+            const seatPos = selectedSeat.position;
+            const eyeY = seatPos.y + (currentFmt.isLuxury ? 1.0 : 1.25);
+            const eyeZ = seatPos.z + 0.3;
 
-        document.getElementById('formatSelect').addEventListener('change', e => {
-            loadFormat(e.target.value);
+            targetCamPos.set(seatPos.x, eyeY, eyeZ);
+            targetCamLook.set(0, currentFmt.screenH / 2 + 1.5, -14); // Look at screen center
+
+            setTimeout(() => {
+                mode = 'seatview';
+                document.getElementById('backbtn').classList.remove('hidden');
+                document.getElementById('formatSelect').parentElement.classList.remove('hidden');
+                document.getElementById('formatSelect').classList.add('hidden');
+            }, 1200); // Allow time for continuous lerp to reach target
         });
 
-        // ═══════════════════════════════════════════════
-        //  RENDER LOOP
-        // ═══════════════════════════════════════════════
+        function resetToOverview() {
+            mode = 'animating_out';
+            deselectSeat();
+            document.getElementById('backbtn').classList.add('hidden');
+            document.getElementById('formatSelect').classList.remove('hidden');
+
+            const ml = document.getElementById('modeLabel');
+            ml.textContent = 'OVERVIEW';
+            ml.className = "glass-panel text-white/80 text-xs px-3 py-1 rounded-full uppercase tracking-widest font-semibold border border-white/20 transition-all";
+
+            seatViewAngles = { x: 0, y: 0 };
+            setTimeout(() => { mode = 'overview'; }, 1200);
+        }
+
+        document.getElementById('backbtn').addEventListener('click', resetToOverview);
+
+        const clock = new THREE.Clock();
+        const lookAtTracker = new THREE.Vector3(0, 5, -10);
+
         function render() {
             requestAnimationFrame(render);
             if (vt && !videoEl.paused) vt.needsUpdate = true;
-            camTh += (tTh - camTh) * .07;
-            camPh += (tPh - camPh) * .07;
-            camR += (tR - camR) * .07;
-            if (mode === 'overview') {
-                camera.position.set(
-                    camR * Math.sin(camTh) * Math.cos(camPh),
-                    camR * Math.sin(camPh) + 4,
-                    camR * Math.cos(camTh) * Math.cos(camPh)
-                );
-                camera.lookAt(0, 5, -6);
-            }
-            if (mode === 'seatview' && selectedSeat) {
-                const sp = selectedSeat.position;
-                const fmt = currentFmt || FORMATS.standard;
-                const eyeH = sp.y + 1.25 + (fmt.seatScale > 1 ? .2 : 0);
-                camera.position.set(sp.x, eyeH, sp.z + .55);
 
-                let aspect = 2.39;
-                if (fmt.isImax) aspect = 1.90;
-                const scrW = fmt.screenFt * 0.45;
-                const scrH = scrW / aspect;
-                const screenCY = scrH / 2 + 2.5;
+            if (mode === 'overview' || mode === 'animating_out') {
+                // Orbital math
+                const camX = overviewRadius * Math.sin(overviewAngles.th) * Math.cos(overviewAngles.ph);
+                const camY = overviewRadius * Math.sin(overviewAngles.ph) + 5;
+                const camZ = overviewRadius * Math.cos(overviewAngles.th) * Math.cos(overviewAngles.ph);
 
-                camera.lookAt(sp.x + svX * 14, screenCY + (-svY * 6), -18);
+                targetCamPos.set(camX, camY, camZ);
+                targetCamLook.set(0, 4, -5);
             }
+            else if (mode === 'seatview' && selectedSeat && selectedSeat.position) {
+                // Mouse look logic offset from screen center
+                const lookX = seatViewAngles.x * 20;
+                const lookY = (currentFmt.screenH / 2 + 1.5) + (seatViewAngles.y * 15);
+                targetCamLook.set(lookX, lookY, -14);
+            }
+
+            // CORE FIX: Restoring the buttery smooth continuous lerp
+            camera.position.lerp(targetCamPos, 0.05); // Smooth glide to position
+            lookAtTracker.lerp(targetCamLook, 0.05); // Smooth glide to look target
+            camera.lookAt(lookAtTracker);
+
             renderer.render(scene, camera);
         }
 
-        // ── INIT ──
+        // Initialize System
         loadFormat('standard');
         render();
-        setTimeout(() => document.getElementById('hint').style.opacity = '.4', 6000);
     </script>
 </body>
 
